@@ -20,7 +20,7 @@ class Bd
    );
 
    self::$pdo->exec(
-    'CREATE TABLE IF NOT EXISTS PLAYERA (
+    'CREATE TABLE IF NOT EXISTS LIBRO (
       LIB_ID TEXT NOT NULL,
       LIB_TITULO TEXT NOT NULL,
       LIB_AUTOR TEXT NOT NULL,

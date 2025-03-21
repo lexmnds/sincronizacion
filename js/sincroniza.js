@@ -1,10 +1,10 @@
 import { enviaJson } from "../lib/js/enviaJson.js"
 import { exportaAHtml } from "../lib/js/exportaAHtml.js"
 import { muestraError } from "../lib/js/muestraError.js"
-import { playeraConsultaTodos } from "./bd/libroConsultaTodos.js"
-import { playerasReemplaza } from "./bd/librosReemplaza.js"
+import { libroConsultaTodos } from "./bd/libroConsultaTodos.js"
+import { librosReemplaza } from "./bd/librosReemplaza.js"
 import { esperaUnPocoYSincroniza } from "./esperaUnPocoYSincroniza.js"
-import { validaPlayeras } from "./modelo/validaLibros.js"
+import { validaLibros } from "./modelo/validaLibros.js"
 import { renderiza } from "./renderiza.js"
 
 /**

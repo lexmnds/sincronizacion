@@ -1,4 +1,4 @@
-import { validaPlayera } from "./validaLibro.js"
+import { validaLibro } from "./validaLibro.js"
 
 /**
  * @param { any } objetos
