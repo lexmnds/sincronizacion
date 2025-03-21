@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" class="light dark">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Inicio - BookSync</title>
+
+  <script src="js/registraServiceWorker.js"></script>
+
+  <meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#fffbfe">
+  <link rel="icon" sizes="48x48" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+  <script src="ungap/custom-elements.js"></script>
+
+  <script type="module" src="js/configura.js"></script>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/transicion_pestanas.css">
+  <script type="module" src="lib/js/consumeJson.js"></script>
+  <script type="module" src="lib/js/muestraObjeto.js"></script>
+  <script type="module" src="lib/js/muestraError.js"></script>
+  <script type="module" src="js/bd/libroConsultaNoEliminados.js"></script>
+  <script type="module" src="js/renderiza.js"></script>
+  <script type="module" src="js/sincroniza.js"></script>
+  <script type="module" src="js/esperaUnPocoYSincroniza.js"></script>
+</head>
+
+  <md-top-app-bar adicional="tab" headline="headline">
+  </md-top-app-bar>
+
+  <md-top-app-bar class="center-aligned">
+    <h1 id="headline">Libros</h1>
+  </md-top-app-bar>
+
+  <nav-tab-fixed id="tab"></nav-tab-fixed>
+
+
+<body onload="libroConsultaNoEliminados()
+   .then(libros => {
+    renderiza(lista, libros)
+    sincroniza(lista)
+   })
+   .catch(error => {
+    muestraError(error)
+    esperaUnPocoYSincroniza(lista)
+   })">
+
+  <main>
+
+    <ul class="md-list" id="lista">
+      <li class="md-two-line">
+        <span class="headline">Cargando&hellip;</span>
+        <span class="supporting"><progress max="100">Cargando&hellip;</progress></span>
+      </li>
+    </ul>
+
+    <nav-drw></nav-drw>
+    <a href="agrega.html">
+      <button type="button" class="md-fab-primary" style="position: fixed; bottom: 1rem; right: 1rem;">
+        <span class="material-symbols-outlined">add</span>
+      </button> </a>
+
+
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es" class="light dark">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Modifica - BookSync</title>
+
+  <script src="js/registraServiceWorker.js"></script>
+
+  <meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#fffbfe">
+  <link rel="icon" sizes="48x48" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+  <script src="ungap/custom-elements.js"></script>
+
+  <script type="module" src="js/configura.js"></script>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/transicion_pestanas.css">
+  <script type="module" src="lib/js/consumeJson.js"></script>
+  <script type="module" src="lib/js/muestraObjeto.js"></script>
+  <script type="module" src="lib/js/muestraError.js"></script>
+  <script type="module" src="js/bd/libroBusca.js"></script>
+  <script type="module" src="js/bd/libroElimina.js"></script>
+  <script type="module" src="js/bd/libroModifica.js"></script>
+  <script>
+
+    // Obtiene los parámetros de la página.
+    const parametros = new URL(location.href).searchParams
+
+    const paramId = parametros.get("id")
+
+  </script>
+
+</head>
+
+<body onload="if (paramId !== null) {
+   playeraBusca(paramId)
+    .then(libro => {
+     if (libro === undefined) throw new Error('libro no encontrado.')
+     muestraObjeto(forma, {
+              titulo: { value: libro.LIB_TITULO },
+              autor: { value: libro.LIB_AUTOR },
+              isbn: { value: libro.LIB_ISBN },
+              editorial: { value: libro.LIB_EDITORIAL }
+            });
+          })
+    .catch(muestraError)
+  }">
+
+
+
+  <form id="forma" onsubmit="
+   event.preventDefault()
+   if (paramId !== null) {
+    const LIB_ID = paramId
+    // Lee el título, quitándole los espacios al inicio y al final.
+    const LIB_TITULO = forma.titulo.value.trim()
+    const LIB_AUTOR = forma.autor.value.trim()
+    const LIB_ISBN = forma.isbn.value.trim()
+    const LIB_EDITORIAL = forma.editorial.value.trim()
+    const modelo = { lib_ID, LIB_TITULO, LIB_AUTOR, LIB_ISBN, LIB_EDITORIAL }
+    libroModifica(modelo)
+     .then(json => location.href = 'index.html')
+     .catch(muestraError)
+   }">
+
+    <md-top-app-bar adicional="tab" headline="headline">
+
+      <a href="index.html">
+        <button class="md-standard-icon-button" type="button" title="Cancelar" slot="navigation">
+          <span class="material-symbols-outlined">cancel</span>
+        </button>
+      </a>
+      <button class="md-standard-icon-button" type="submit" title="Guardar" slot="action">
+        <span class="material-symbols-outlined">save</span>
+      </button>
+
+      <button is="md-overflow-button" slot="action" onclick="overflow.alterna(this)"></button>
+
+    </md-top-app-bar>
+    <h1 id="headline">Modificar datos</h1>
+    <nav-tab-fixed id="tab"></nav-tab-fixed>
+
+
+    <main>
+      <input name="id" type="hidden">
+
+      <p>
+        <label class="md-filled-text-field">
+          <input required value="Cargando&hellip;" name="titulo">
+          <span>Título del libro *</span>
+          <small>Obligatorio</small>
+        </label>
+      </p>
+      <p>
+        <label class="md-filled-text-field">
+          <input required value="Cargando&hellip;" name="autor">
+          <span>Autor del libro *</span>
+          <small>Obligatorio</small>
+        </label>
+      </p>
+      <p>
+        <label class="md-filled-text-field">
+          <input required value="Cargando&hellip;" name="isbn">
+          <span>ISBN del libro*</span>
+          <small>Obligatorio</small>
+        </label>
+      </p>
+      <p>
+        <label class="md-filled-text-field">
+          <input required value="Cargando&hellip;" name="editorial">
+          <span>Editorial del libro *</span>
+          <small>Obligatorio</small>
+        </label>
+      </p>
+    </main>
+  </form>
+ 
+  <md-overflow-menu id="overflow">
+
+    <button type="button" onclick="
+    if (paramId !== null && confirm('Confirma la eliminación')) {
+     libroElimina(paramId)
+      .then(() => location.href = 'index.html')
+      .catch(muestraError)
+    }">
+      <span class="material-symbols-outlined"> delete</span> Eliminar
+    </button>
+
+  </md-overflow-menu>
+  <nav-drw></nav-drw>
+</body>
+
+</html>

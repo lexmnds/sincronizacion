@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" class="light dark">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar - BookSync</title>
+
+  <script src="js/registraServiceWorker.js"></script>
+
+  <meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#fffbfe">
+  <link rel="icon" sizes="48x48" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+  <script src="ungap/custom-elements.js"></script>
+  <script type="module" src="js/configura.js"></script>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/transicion_pestanas.css">
+  <script type="module" src="lib/js/submitForm.js"></script>
+  <script type="module" src="lib/js/muestraError.js"></script>
+  <script type="module" src="js/bd/libroAgrega.js"></script>
+
+</head>
+
+<body>
+
+  <form id="forma" onsubmit="event.preventDefault(); 
+    // Lee los datos del formulario, eliminando los espacios al principio y al final
+    const LIB_TITULO = forma.titulo.value.trim();
+    const LIB_AUTOR = forma.autor.value.trim();
+    const LIB_ISBN = forma.isbn.value.trim();
+    const LIB_EDITORIAL = forma.editorial.value.trim();
+    const modelo = { LIB_TITULO, LIB_AUTOR, LIB_ISBN, LIB_EDITORIAL };
+    
+    // Llama a la función playeraAgrega con el objeto modelo.
+    libroAgrega(modelo)
+      .then(json => location.href = 'index.html') // Redirige al index después de agregar
+      .catch(muestraError);">
+
+    <md-top-app-bar adicional="tab" headline="headline">
+      <a href="index.html">
+        <button class="md-standard-icon-button" type="button" title="Cancelar" slot="navigation">
+          <span class="material-symbols-outlined">cancel</span>
+        </button>
+      </a>
+
+      <button class="md-standard-icon-button" type="submit" title="Agregar" slot="action">
+        <span class="material-symbols-outlined">save</span>
+      </button>
+    </md-top-app-bar>
+
+    <h1 id="headline">Agregar Libro</h1>
+    <nav-tab-fixed id="tab"></nav-tab-fixed>
+    
+    <main>
+      <p>
+        <label class="md-filled-text-field">
+          <input required placeholder="Título*" name="titulo">
+          <span>Título del libro *</span>
+          <small>Obligatorio</small>
+        </label>
+      </p>
+      <p>
+        <label class="md-filled-text-field">
+          <input required placeholder="Autor*" name="autor">
+          <span>Autor del libro *</span>
+          <small>Obligatorio</small>
+        </label>
+      </p>
+      <p>
+        <label class="md-filled-text-field">
+          <input required placeholder="ISBN*" name="isbn">
+          <span>ISBN del libro *</span>
+          <small>Obligatorio</small>
+        </label>
+      </p>
+      <p>
+        <label class="md-filled-text-field">
+          <input required placeholder="Editorial*" name="editorial">
+          <span>Editorial del libro *</span>
+          <small>Obligatorio</small>
+        </label>
+      </p>
+
+      <!-- Cierra el formulario antes de cerrar main -->
+    </main>
+
+  </form>
+
+  <nav-drw></nav-drw>
+
+</body>
+
+</html>
